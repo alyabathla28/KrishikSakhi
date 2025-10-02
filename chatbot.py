@@ -12,8 +12,8 @@ from PIL import Image
 from gtts import gTTS
 
 # api keys and configuration
-GEMINI_API_KEY = "AIzaSyAuDRk4KHDPYDeWdTTpaoyn98BjaP2pXLI"   
-NGROK_AUTHTOKEN = "32vbkQDmXb1dOLUPFcutYO5WCA6_7f8zJoHsBXnE5FrUGDu92" 
+GEMINI_API_KEY = "YOUR_GEMINI_API_KEY"   
+NGROK_AUTHTOKEN = "YOUR_NGROK_AUTHTOKEN_CODE" 
 
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel("gemini-1.5-flash")
@@ -91,3 +91,4 @@ public_url = ngrok.connect(5000)
 print("✅ Copy this URL into your frontend:", public_url)
 
 app.run(port=5000)
+
