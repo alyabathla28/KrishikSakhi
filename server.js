@@ -5,7 +5,7 @@ const cors = require('cors');
 const app = express();
 const PORT = 3000;
 
-const OPENWEATHER_API_KEY = '5de22cdea670f0ff793cebbcc88b778c';
+const OPENWEATHER_API_KEY = 'YOUR_OPENWEATHER_API_KEY';
 
 app.use(cors());
 app.use(express.json());
@@ -51,6 +51,7 @@ app.post('/getWeather', async (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+
 
 
 
