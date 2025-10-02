@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Krishi Sakhi - Your Digital Farming Companion</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1B4332 0%, #57a26e 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #90ee90;
+        }
+
+        /* Hero section container */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden; /* Hides any part of the video that might overflow */
+            color: white;
+            text-align: center;
+        }
+
+        /* The background video itself */
+        #bg-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1; /* Place the video behind everything else */
+            object-fit: cover; /* Ensures the video covers the area without distortion */
+        }
+
+        /* Add a dark overlay for better text readability */
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5); /* 50% black overlay */
+            z-index: 0; /* Place overlay between video and content */
+        }
+
+        /* Ensure the hero content appears above the overlay */
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-family: monospace;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+
+        .malayalam-text {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #255903, #018f4f);
+
+            color: white;
+            padding: 15px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(251, 255, 253, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(238, 251, 255, 0.856);
+        }
+
+        /* Problem Section */
+        .problem-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #fff5f5 0%, #f0f8ff 100%);
+        }
+        
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .problem-content h2 {
+            font-size: 2.5rem;
+            color: #2d5a27;
+            margin-bottom: 2rem;
+        }
+
+        .problem-points {
+            list-style: none;
+        }
+
+        .problem-points li {
+            background: #F5F5DC;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-left: 5px solid #a5620a;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .problem-points li:hover {
+            transform: translateX(10px);
+        }
+
+        .problem-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .farmer-icon {
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(135deg, #4a7c59, #2d5a27);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            color: white;
+            box-shadow: 0 20px 40px rgba(45, 90, 39, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2d5a27;
+        }
+       .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 48px;
+        }
+
+        .flip-card {
+            background: transparent;
+            width: 100%;
+            height: 250px;
+            perspective: 1000px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            transform-style: preserve-3d;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front,
+        .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 30px rgba(74, 124, 89, 0.2);
+        }
+
+        .flip-card-front {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+            background: linear-gradient(135deg, #409f6c 0%, #3aaa4e 100%);
+            height: 100%;
+            width: 100%;
+            padding: 30px;
+            font-size: 1.4rem;
+            color: white; 
+            text-align: center;
+            border-radius: 20px;
+        }
+
+        .flip-card-back {
+            font-size: 1.1rem; 
+            background: #4a7c59;
+            color: #fff;
+            transform: rotateY(180deg);
+            padding: 30px;
+            line-height: 1.4;
+        }
+
+        /* Impact Section */
+        .impact-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #6baf65 0%, #61795d 100%);
+            color: white;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            text-align: center;
+        }
+
+        .impact-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px 20px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .impact-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #90ee90;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        /* Technology Section */
+        .tech-section {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .tech-features {
+            list-style: none;
+        }
+
+        .tech-features li {
+            background: #E6F4EA;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            border-left: 5px solid #4a7c59;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .tech-features li:hover {
+            transform: translateX(10px);
+        }
+
+        .tech-visual {
+            background: linear-gradient(135deg, #4a7c59, #2d5a27);
+            border-radius: 20px;
+            padding: 40px;
+            color: white;
+            text-align: center;
+        }
+
+        .ai-brain {
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        /* CTA Section */
+        .final-cta {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .final-cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .final-cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content .subtitle { font-size: 1.2rem; }
+            .problem-grid, .tech-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .farmer-icon { width: 200px; height: 200px; font-size: 5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+               <img src="logo/KS logo final.png" alt="Krishi Sakhi Logo" style="height:50px; width:auto; vertical-align: middle; border-radius: 8px; ">
+              Krishi Sakhi
+            </div>
+            <ul class="nav-links">
+              <li><a href="#home">Home</a></li>
+                <li><a href="#problem">Problem</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#impact">Impact</a></li>
+                <li><a href="#technology">Technology</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <video playsinline autoplay muted loop id="bg-video">
+            <source src="Video/mixkit-people-working-in-a-field-2388-hd-ready.mp4" type="video/mp4">
+            
+        </video>
+
+        <div class="container">
+            <div class="hero-content">
+                <h1>Krishi Sakhi</h1>
+                <p class="subtitle">Your AI-Powered Digital Farming Companion</p>
+                <p class="malayalam-text">Empowering Kerala's Farmers with Personalized AI Guidance</p>
+                <a href="javascript:void(0)" class="cta-button" onclick="openAuthModal()">Get Started Today</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="problem" class="problem-section">
+        <div class="container">
+            <div class="problem-grid">
+                <div class="problem-content">
+                    <h2>The Challenge Facing Kerala's Farmers</h2>
+                    <ul class="problem-points">
+                        <li>
+                            <strong>Generic Agricultural Advice</strong><br>
+                            <b>Issue:</b> Farmers often receive one-size-fits-all guidance that doesn’t consider local crops, soil, or weather conditions<br>
+                            <b>Impact:</b> Leads to wasted resources, inefficient practices, and lower productivity
+                        </li>
+                        <li>
+                            <strong>Lack of Personalized Support</strong><br>
+                            <b>Issue:</b> No context-aware advice tailored to specific farm conditions or farming methods<br>
+                            <b>Impact:</b> Farmers find it hard to optimize yields and improve their techniques
+                        </li>
+                        <li>
+                            <strong>Poor Record Keeping</strong><br>
+                            <b>Issue:</b> Farmers struggle to maintain accurate logs of activities, crop cycles, and expenditures<br>
+                            <b>Impact:</b> Limits learning from past experience and access to government schemes requiring documentation
+                        </li>
+                        <li>
+                            <strong>Knowledge Gap</strong><br>
+                            <b>Issue:</b> Limited access to timely, actionable agricultural information during critical crop growth stages<br>
+                            <b>Impact:</b> Informed decision-making is difficult, leading to lower crop success rates
+                        </li>
+                    </ul>
+                </div>
+                <div class="problem-visual">
+                    <div class="farmer-icon">👨‍🌾</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="section-title">Core Features of Krishi Sakhi</h2>
+            <div class="features-grid">
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="feature-icon">📋</div>
+                            <h3>Farmer & Farm Profiling</h3>
+                        </div>
+                        <div class="flip-card-back">
+                            <p>Comprehensive capture of key details of farmer including Name, Email, Gender, DOB and of Farm location, Land size, Crop types, Soil type, Season and Water resources available for personalized recommendations.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="feature-icon">📅</div>
+                            <h3>Smart Event Calendar</h3>
+                        </div>
+                        <div class="flip-card-back">
+                            <p>Schedule key farm activities like sowing, irrigation, and harvesting. The app generates automated reminders and countdowns for each stage of the crop cycle, ensuring farmers never miss a critical task.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="feature-icon">🌦️</div>
+                            <h3>Real-Time Weather Alerts</h3>
+                        </div>
+                        <div class="flip-card-back">
+                            <p>Get instant weather updates based on your farm’s location. Receive alerts like “Don’t sow today, rain is coming!” to save seeds, money, and effort.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="feature-icon">🤖</div>
+                            <h3>Intelligent Chatbot Assistance</h3>
+                        </div>
+                        <div class="flip-card-back">
+                            <p>Interact through text, voice, or crop images. The AI chatbot responds instantly in both text and audio, making it easy even for farmers with low literacy.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="feature-icon">📈</div>
+                            <h3>Crop Price Analytics</h3>
+                        </div>
+                        <div class="flip-card-back">
+                            <p>Check market prices for crops by entering crop name, city, and state. View detailed graphs showing minimum, maximum, and average prices to make smarter selling decisions.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front">
+                            <div class="feature-icon">⏰</div>
+                            <h3>Personalized Reminders & Notifications</h3>
+                        </div>
+                        <div class="flip-card-back">
+                            <p>Receive proactive alerts for farm tasks, weather changes, and upcoming crop events. Stay informed and reduce crop loss with timely guidance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="impact" class="impact-section">
+        <div class="container">
+            <h2 class="section-title">Expected Impact</h2>
+            <div class="impact-grid">
+                <div class="impact-item">
+                    <span class="impact-number">24/7</span>
+                    <h3>On-Demand Support</h3>
+                    <p>Personalized farming assistance available whenever farmers need it</p>
+                </div>
+                <div class="impact-item">
+                    <span class="impact-number">🚀</span>
+                    <h3>Enhanced Productivity</h3>
+                    <p>Timely reminders and alerts leading to better crop yields</p>
+                </div>
+                <div class="impact-item">
+                    <span class="impact-number">🌱</span>
+                    <h3>Sustainable Practices</h3>
+                    <p>AI-guided sustainable farming methods for long-term agricultural health</p>
+                </div>
+                <div class="impact-item">
+                    <span class="impact-number">🔗</span>
+                    <h3>Bridging Knowledge Gap</h3>
+                    <p>Connecting traditional wisdom with modern AI insights and local context</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="technology" class="tech-section">
+        <div class="container">
+            <div class="tech-grid">
+                <div>
+                    <h2 class="section-title" style="text-align: left;">Technology Stack</h2>
+                    <ul class="tech-features">
+                        <li>
+                            <strong>Multi-Modal Interaction</strong><br>
+                            Voice, text, and image-based queries for easy farmer engagement
+                        </li>
+                        <li>
+                            <strong>AI Model</strong><br>
+                            Predictive responses for Farmer queries via text and audio messages
+                        </li>
+                        <li>
+                            <strong>Geospatial Intelligence</strong><br>
+                            Tracking live loaction and giving weather updates 
+                        </li>
+                        <li>
+                            <strong>Real-time Data Integration</strong><br>
+                            Seamless integration of live weather updates and market price trends
+                        </li>
+                    </ul>
+                </div>
+                <div class="tech-visual">
+                    <div class="ai-brain">🤖</div>
+                    <h3>AI-Powered Intelligence</h3>
+                    <p>Our advanced AI continuously learns from local farming patterns, weather data, and successful practices to provide increasingly accurate and personalized recommendations for each farmer's unique situation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="final-cta">
+        <div class="container">
+            <h2>Empowering Kerala's Agricultural Future</h2>
+            <p>Krishi Sakhi aims to be every farmer's digital companion—understanding their context, guiding their actions, and learning alongside them through every crop cycle.</p>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Krishi Sakhi. Empowering farmers through AI-powered agricultural intelligence.</p>
+            <p>Built for Kerala's agricultural community with love and technology 🌾</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (!href || href === '#') return;
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.flip-card, .impact-item, .problem-points li').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+        (function setupFarmerFloat() {
+            const farmerIcon = document.querySelector('.farmer-icon');
+            if (!farmerIcon) return;
+            let floatDirection = 1;
+            if (!farmerIcon.style.transform) farmerIcon.style.transform = 'translateY(0px)';
+            setInterval(() => {
+                const m = farmerIcon.style.transform.match(/translateY\((-?\d+)px\)/);
+                const currentY = m ? parseInt(m[1], 10) : 0;
+                if (currentY >= 20) floatDirection = -1;
+                if (currentY <= -20) floatDirection = 1;
+                const nextY = currentY + (2 * floatDirection);
+                farmerIcon.style.transform = 'translateY(${nextY}px)';
+            }, 100);
+        })();
+    </script>
+
+   <div id="loginModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:9999; align-items:center; justify-content:center;">
+      <div style="background:#fff; padding:30px 40px; border-radius:18px; width:90%; max-width:350px; margin:auto; box-shadow:0 10px 40px rgba(0,0,0,0.15); position:relative;">
+        <h2 style="color:#2d5a27; margin-bottom:15px;">Login</h2>
+        <input type="text" placeholder="Email / Mobile" style="width:100%; margin:14px 0 8px 0; padding:9px 14px; border:1px solid #ccc; border-radius:8px; font-size:1rem;">
+        <input type="password" placeholder="Password" style="width:100%; margin-bottom:14px; padding:9px 14px; border:1px solid #ccc; border-radius:8px; font-size:1rem;">
+        <button style="display:block; width:100%; background:linear-gradient(45deg,#4a7c59,#2d5a27); color:#fff; border:none; padding:10px 0; border-radius:8px; font-size:1rem; margin-bottom:8px;" onclick="window.location.href='public/features.html'">Login</button>
+        <div style="text-align:center; margin-top:8px; font-size:1rem;">
+          <span>Not registered?</span>
+          <a href="javascript:void(0);" style="color:#ff6b35; text-decoration:underline;" onclick="switchToSignup()">Sign Up</a>
+        </div>
+        <span style="position:absolute; top:10px; right:16px; font-size:22px; color:#999; cursor:pointer;" onclick="closeLoginModal()">&times;</span>
+        <div id="g_id_onload"
+         data-client_id="308938224534-7em0jaoa03fkk4k02cegg3ij7un8sngc.apps.googleusercontent.com"
+         data-context="signin"
+         data-callback="handleCredentialResponse"
+         data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin"
+         data-type="standard"
+         data-shape="rectangular"
+         data-theme="outline"
+         data-text="sign_in_with"
+         data-size="large"
+         data-logo_alignment="left">
+        </div>
+      </div>
+    </div>
+
+    <div id="signupModal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); z-index:9999; align-items:center; justify-content:center;">
+      <div style="background:#fff; padding:30px 40px; border-radius:18px; width:90%; max-width:350px; margin:auto; box-shadow:0 10px 40px rgba(0,0,0,0.15); position:relative;">
+        <h2 style="color:#2d5a27; margin-bottom:15px;">Sign Up</h2>
+        <input type="text" placeholder="First Name" style="width:100%; margin:14px 0 8px 0; padding:9px 14px; border:1px solid #ccc; border-radius:8px; font-size:1rem;">
+        <input type="text" placeholder="Last Name" style="width:100%; margin-bottom:8px; padding:9px 14px; border:1px solid #ccc; border-radius:8px; font-size:1rem;">
+        <input type="text" placeholder="Username" style="width:100%; margin-bottom:8px; padding:9px 14px; border:1px solid #ccc; border-radius:8px; font-size:1rem;">
+        <input type="email" placeholder="Email" style="width:100%; margin-bottom:8px; padding:9px 14px; border:1px solid #ccc; border-radius:8px; font-size:1rem;">
+        <select style="width:100%; margin-bottom:8px; padding:9px 14px; border:1px solid #ccc; border-radius:8px; font-size:1rem;">
+          <option value="" disabled selected>Select Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
+        <input type="date" placeholder="Date of Birth" style="width:100%; margin-bottom:8px; padding:9px 14px; border:1px solid #ccc; border-radius:8px; font-size:1rem;">
+        <input type="password" placeholder="Password" style="width:100%; margin-bottom:8px; padding:9px 14px; border:1px solid #ccc; border-radius:8px; font-size:1rem;">
+        <input type="password" placeholder="Confirm Password" style="width:100%; margin-bottom:14px; padding:9px 14px; border:1px solid #ccc; border-radius:8px; font-size:1rem;">
+        <button style="display:block; width:100%; background:linear-gradient(45deg,#ff6b35,#f7931e); color:#fff; border:none; padding:10px 0; border-radius:8px; font-size:1rem;"onclick="window.location.href='public/features.html'">Sign Up</button>
+        <div style="text-align:center; margin-top:8px; font-size:1rem;">
+          <span>Already have an account?</span>
+          <a href="javascript:void(0);" style="color:#2d5a27; text-decoration:underline;" onclick="switchToLogin()">Login</a>
+        </div>
+        <span style="position:absolute; top:10px; right:16px; font-size:22px; color:#999; cursor:pointer;" onclick="closeSignupModal()">&times;</span>
+      </div>
+    </div>
+
+<script>
+function openLoginModal() {
+  const lm = document.getElementById('loginModal');
+  if (lm) lm.style.display = 'flex';
+  const sm = document.getElementById('signupModal');
+  if (sm) sm.style.display = 'none';
+}
+function closeLoginModal() {
+  const lm = document.getElementById('loginModal');
+  if (lm) lm.style.display = 'none';
+}
+function openSignupModal() {
+  const sm = document.getElementById('signupModal');
+  if (sm) sm.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  const lm = document.getElementById('loginModal');
+  if (lm) lm.style.display = 'none';
+}
+function closeSignupModal() {
+  const sm = document.getElementById('signupModal');
+  if (sm) sm.style.display = 'none';
+  document.body.style.overflow = 'auto';
+}
+function switchToSignup() {
+  openSignupModal();
+}
+function switchToLogin() {
+  openLoginModal();
+}
+
+function openAuthModal() {
+  openLoginModal();
+}
+</script>
+
+<div style="height:100px;"></div>
+<script src="login.js"></script>
+
+</body>
+</html>

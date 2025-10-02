@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Project Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      width: 450px;
+    }
+    h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .checkbox-group {
+      margin-top: 5px;
+      margin-bottom: 10px;
+    }
+    .checkbox-group label {
+      font-weight: normal;
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+    .checkbox-group input {
+      margin-right: 10px;
+      width: auto;
+    }
+    .budget-display {
+      margin-top: 5px;
+      font-weight: bold;
+      color: #007bff;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>New Project Form</h2>
+    <form id="projectForm">
+
+      <label for="land">Land size (in acres)</label>
+      <input type="number" id="land" name="land" min="0.1" step="0.1" placeholder="Enter land size in acres" required>
+
+      <label for="soil">Soil type</label>
+      <select id="soil" name="soil" required>
+        <option value="">Select Soil Type</option>
+        <option>Alluvial</option>
+        <option>Black</option>
+        <option>Red</option>
+        <option>Laterite</option>
+        <option>Mountain/Forest</option>
+        <option>Desert</option>
+        <option>Other</option>
+      </select>
+
+      <label>Water source available</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="water" value="Canal"> Canal</label>
+        <label><input type="checkbox" name="water" value="Tube Well"> Tube Well</label>
+        <label><input type="checkbox" name="water" value="Drip"> Drip</label>
+        <label><input type="checkbox" name="water" value="Rainfed"> Rainfed</label>
+        <label><input type="checkbox" name="water" value="Other"> Other</label>
+      </div>
+
+      <label for="budget">Budget range (₹)</label>
+      <input type="range" id="budget" name="budget" min="1000" max="100000" step="1000" value="20000" oninput="updateBudgetValue(this.value)">
+      <div class="budget-display">₹ <span id="budgetValue">20000</span></div>
+
+      <label for="previous">Previous crop grown</label>
+      <input type="text" id="previous" name="previous" placeholder="Enter previous crop" required>
+
+      <label for="preferred">Preferred crops</label>
+      <input type="text" id="preferred" name="preferred" placeholder="Enter preferred crops" required>
+
+      <label for="season">Season</label>
+      <select id="season" name="season" required>
+        <option value="">Select Season</option>
+        <option>Kharif (June - October)</option>
+        <option>Rabi (November - March)</option>
+        <option>Zaid (April - June)</option>
+      </select>
+
+      <label for="sowing">Sowing Month</label>
+      <select id="sowing" name="sowing" required>
+        <option value="">Select Month</option>
+        <option>January</option>
+        <option>February</option>
+        <option>March</option>
+        <option>April</option>
+        <option>May</option>
+        <option>June</option>
+        <option>July</option>
+        <option>August</option>
+        <option>September</option>
+        <option>October</option>
+        <option>November</option>
+        <option>December</option>
+      </select>
+
+      <h3 style="margin-top:20px; color:#007bff;">Location Details</h3>
+
+      <label for="village">Village / Town</label>
+      <input type="text" id="village" name="village" placeholder="Enter village or town name" required>
+
+      <label for="city">City</label>
+      <input type="text" id="city" name="city" placeholder="Enter city name" required>
+
+      <label for="state">State</label>
+      <input type="text" id="state" name="state" placeholder="Enter state name" required>
+
+      <label for="pincode">Pincode</label>
+      <input type="text" id="pincode" name="pincode" placeholder="Enter 6 digit pincode" pattern="[0-9]{6}" required>
+
+      <button type="submit">Submit Project</button>
+    </form>
+  </div>
+
+
+  <script src="formdatabase.js"></script>
+</body>
+</html>
